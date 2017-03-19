@@ -12,3 +12,7 @@ class calculator
 {
 
 }
+
+$csv = array_map('str_getcsv', file('type_1.csv'));
+
+echo $csv;
