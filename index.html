@@ -12,36 +12,147 @@
 </head>
 <body><br><br><br><br>
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Калькулятор</h3>
+    <div class="calculator panel panel-default">
+        <div class="calculator_head panel-heading">
+            <h3 class="calculator_head__name panel-title">Калькулятор</h3>
         </div>
-        <div class="panel-body">
-            <form action="calculator.php" class="form-inline">
+        <div class="calculator_body panel-body">
+            <form action="calculator.php" class="form form-inline" method="get">
 
                 <div class="input-group">
-                    <input id="height" class="form-control" type="text">
+                    <input id="height" name="height" class="input1 form-control" type="text" min="500" max="1200"
+                           value="500">
                     <label class="input-group-addon" for="height">мм</label>
 
-                    <input id="width" class="form-control" type="text">
+                    <input id="width" name="width" class="input2 form-control" type="text" value="500">
                     <label class="input-group-addon" for="width">мм</label>
                 </div>
 
                 <label for="lamination">Ламинация</label>
-                <select class="form-control" name="lamination" id="lamination">
+                <select class="lamination form-control" name="lamination" id="lamination">
                     <option value="no">Нет</option>
-                    <option value="outside">Снаружи + 18% К стоимости</option>
-                    <option value="inside">Изнутри + 22% К стоимости</option>
-                    <option value="both">С обеих сторон + 40% К стоимости</option>
+                    <option value="outside">Снаружи</option>
+                    <option value="inside">Изнутри</option>
+                    <option value="both">С обеих сторон</option>
                 </select>
-                <input type="submit">
+
+                <label for="type">Выберите тип окна</label>
+                <select class="type_of_window form-control" name="type" id="type">
+                    <option value="type_1.csv">Тип окна 1</option>
+                    <option value="type_2.csv">Тип окна 2</option>
+                    <option value="type_3.csv">Тип окна 3</option>
+                    <option value="type_4.csv">Тип окна 4</option>
+                    <option value="type_5.csv">Тип окна 5</option>
+                    <option value="type_6.csv">Тип окна 6</option>
+                </select>
             </form>
         </div>
     </div>
+    <div class="results"></div>
+    <div class="res"></div>
 </div>
 </body>
 <script>
 
+    $(document).ready(function () {
+
+
+       $(".input1, .input2, .lamination, .type_of_window").change(function () {
+
+            $('.input1, .input2').bind("change keyup input click", function () {
+                if (this.value.match(/[^0-9]/g)) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                }
+            });
+            var type = $(".type_of_window").val();
+
+            switch (type) {
+                case "type_1.csv":
+                    $('.input2, .input1').val(500);
+                    break;
+                case "type_2.csv":
+                    $('.input2, .input1').val(600);
+                    break;
+                case "type_3.csv":
+                case "type_4.csv":
+                    $('.input1').val(600);
+                    $('.input2').val(800);
+                    break;
+                case "type_5.csv":
+                    $('.input1').val(1800);
+                    $('.input2').val(700);
+                    break;
+                case "type_6.csv":
+                    $('.input1').val(1800);
+                    $('.input2').val(1000);
+                    break;
+            }
+
+
+            var val = $(".input1").val();
+
+            switch (type) {
+                case "type_1.csv":
+                    if (val > 2300 && val < 500)
+                        $('.input1').val(500);
+                    break;
+                case "type_2.csv":
+                case "type_3.csv":
+                case "type_4.csv":
+                    if (val > 1900 && val < 600)
+
+                        $('.input1').val(600);
+                    break;
+                case "type_5.csv":
+                case "type_6.csv":
+                    if (val > 2500 && val < 1800)
+                        $('.input1').val(1800);
+                    break;
+            }
+
+            var val2 = $(".input2").val();
+
+            switch (type) {
+                case "type_1.csv":
+                    if (val2 > 1800 && val2 < 500)
+                        $('.input2').val(500);
+                    break;
+                case "type_2.csv":
+                    if (val2 > 1600 && val2 < 600)
+                        $('.input2').val(600);
+                    break;
+                case "type_3.csv":
+                    if (val2 > 3000 && val2 < 800)
+                        $('.input2').val(800);
+                    break;
+                case "type_4.csv":
+                    if (val2 > 2600 && val2 < 800)
+
+                        $('.input2').val(800);
+                    break;
+                case "type_5.csv":
+                    if (val2 > 1200 && val2 < 700)
+                    $('.input2').val(700);
+                    break;
+                case "type_6.csv":
+                    if (val2 > 2500 && val2 < 1000)
+                        $('.input2').val(1000);
+                    break;
+            }
+
+
+            var msg = $('.form').serialize();
+            $.ajax({
+                url: 'calculator.php',
+                data: msg,
+                success: function (data) {
+                    $('.results').html(data);
+                }
+            });
+        });
+
+
+    });
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
