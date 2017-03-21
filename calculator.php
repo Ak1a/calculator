@@ -6,6 +6,7 @@
  * Date: 18.03.2017
  * Time: 17:01
  */
+include ('json.php');
 class calculator
 {
     private $csv;
@@ -95,10 +96,29 @@ class calculator
         return $res;
     }
 
-    public function calculate()
+    /**
+     * Вывод конечной цены
+     * @param string $type Тип окна
+     * @param int $height
+     * @param int $width
+     * @param int $lamination
+     * @param int $discount
+     * @return mixed
+     */
+    public function calculate($type, $height, $width, $lamination, $discount)
     {
+        $json = new Json();
+        $pr = $this->getPrice($type,$height,$width);
+        $lan = $json->getJsonData($lamination);
+        $lan = "0.".$lan;
+        $dis = $json->getJsonData($discount);
+        $dis = "0.".$dis;
 
+        $pr = $pr + ($pr * $lan);
 
+        $price = $pr - ($pr * $dis);
+
+        return $price;
     }
 
     /**
@@ -110,23 +130,3 @@ class calculator
     }
 }
 
-//
-//$csv = array_map('str_getcsv', file('type_1.csv'));
-//$num = count($csv);
-//$row = $csv [16] [0];
-//$str = strpos($row, "-");
-//$row = substr($row, $str + 1);
-//if ($row > 5000) {
-//    echo "lol";
-//} else echo "не lol";
-//
-////var_dump($csv);
-//echo $row."<br>";
-
-$lol = new calculator();
-
-$type = $_GET["type"];
-$height = $_GET["height"];
-$width = $_GET["width"];
-$var = $lol->getPrice($type, $height, $width);
-echo "<h2>".$var."</h2>";

@@ -36,15 +36,18 @@
                     <option value="both">С обеих сторон</option>
                 </select>
 
-                <label for="type">Выберите тип окна</label>
-                <select class="type_of_window form-control" name="type" id="type">
-                    <option value="type_1.csv">Тип окна 1</option>
-                    <option value="type_2.csv">Тип окна 2</option>
-                    <option value="type_3.csv">Тип окна 3</option>
-                    <option value="type_4.csv">Тип окна 4</option>
-                    <option value="type_5.csv">Тип окна 5</option>
-                    <option value="type_6.csv">Тип окна 6</option>
-                </select>
+                <div class="type_of_window row">
+                    <a class="window1" href="#"><img class="col-lg-2" src="img/type_1.jpg"></a>
+                    <a class="window2" href="#"><img class="col-lg-2" src="img/type_2.jpg"></a>
+                    <a class="window3" href="#"><img class="col-lg-2" src="img/type_3.jpg"></a>
+                    <a class="window4" href="#"><img class="col-lg-2" src="img/type_4.jpg"></a>
+                    <a class="window5" href="#"><img class="col-lg-2" src="img/type_5.jpg"></a>
+                    <a class="window6" href="#"><img class="col-lg-2" src="img/type_6.jpg"></a>
+                </div>
+
+                <input class="type" type="hidden" name="type" value="type_1.csv">
+                <input type="hidden" value="user" name="id">
+
             </form>
         </div>
     </div>
@@ -56,102 +59,126 @@
 
     $(document).ready(function () {
 
+        var i12 = $('.input1, .input2');
+        var i1 = $(".input1");
+        var i2 = $(".input2");
+        var tow = $(".type_of_window");
+        var type_of_window;
 
-       $(".input1, .input2, .lamination, .type_of_window").change(function () {
+        $(".window1").click(function () {
 
-            $('.input1, .input2').bind("change keyup input click", function () {
+            type_of_window = "type_1.csv";
+            i12.val(500);
+            $('.type').val("type_1.csv");
+
+        });
+        $(".window2").click(function () {
+
+            type_of_window = "type_2.csv";
+            i12.val(600);
+            $('.type').val("type_2.csv");
+        });
+        $(".window3").click(function () {
+
+            type_of_window = "type_3.csv";
+            i1.val(600);
+            i2.val(800);
+            $('.type').val("type_3.csv");
+
+        });
+        $(".window4").click(function () {
+
+            type_of_window = "type_4.csv";
+            i1.val(600);
+            i2.val(800);
+            $('.type').val("type_4.csv");
+        });
+        $(".window5").click(function () {
+
+            type_of_window = "type_5.csv";
+            i1.val(1800);
+            i2.val(700);
+            $('.type').val("type_5.csv");
+        });
+        $(".window6").click(function () {
+
+            type_of_window = "type_6.csv";
+           // i1.val(1800);
+            //i2.val(1000);
+            $('.type').val("type_6.csv");
+        });
+
+
+        $(".input1, .input2, .lamination, .type_of_window").bind("change click", function () {
+
+            i12.bind("change keyup input click", function () {
                 if (this.value.match(/[^0-9]/g)) {
                     this.value = this.value.replace(/[^0-9]/g, '');
                 }
             });
-            var type = $(".type_of_window").val();
+            // var type = $(".type_of_window").val();
+            var type = type_of_window;
 
+            var val = i1.val();
             switch (type) {
                 case "type_1.csv":
-                    $('.input2, .input1').val(500);
-                    break;
-                case "type_2.csv":
-                    $('.input2, .input1').val(600);
-                    break;
-                case "type_3.csv":
-                case "type_4.csv":
-                    $('.input1').val(600);
-                    $('.input2').val(800);
-                    break;
-                case "type_5.csv":
-                    $('.input1').val(1800);
-                    $('.input2').val(700);
-                    break;
-                case "type_6.csv":
-                    $('.input1').val(1800);
-                    $('.input2').val(1000);
-                    break;
-            }
+                    if (!(val > 500 && val < 2300))
 
-
-            var val = $(".input1").val();
-
-            switch (type) {
-                case "type_1.csv":
-                    if (val > 2300 && val < 500)
-                        $('.input1').val(500);
+                        i1.val(500);
                     break;
                 case "type_2.csv":
                 case "type_3.csv":
                 case "type_4.csv":
-                    if (val > 1900 && val < 600)
+                    if (!(val > 1900 && val < 600))
 
-                        $('.input1').val(600);
+                        i1.val(600);
                     break;
                 case "type_5.csv":
                 case "type_6.csv":
                     if (val > 2500 && val < 1800)
-                        $('.input1').val(1800);
+                        i1.val(1800);
                     break;
             }
 
-            var val2 = $(".input2").val();
+            var val2 = i2.val();
 
             switch (type) {
                 case "type_1.csv":
-                    if (val2 > 1800 && val2 < 500)
-                        $('.input2').val(500);
+                    if (!(val2 > 1800 && val2 < 500))
+                        i2.val(500);
                     break;
                 case "type_2.csv":
-                    if (val2 > 1600 && val2 < 600)
-                        $('.input2').val(600);
+                    if (!(val2 > 1600 && val2 < 600))
+                        i2.val(600);
                     break;
                 case "type_3.csv":
-                    if (val2 > 3000 && val2 < 800)
-                        $('.input2').val(800);
+                    if (!(val2 > 3000 && val2 < 800))
+                        i2.val(800);
                     break;
                 case "type_4.csv":
-                    if (val2 > 2600 && val2 < 800)
+                    if (!(val2 > 2600 && val2 < 800))
 
-                        $('.input2').val(800);
+                        i2.val(800);
                     break;
                 case "type_5.csv":
-                    if (val2 > 1200 && val2 < 700)
-                    $('.input2').val(700);
+                    if (!(val2 > 1200 && val2 < 700))
+                        i2.val(700);
                     break;
                 case "type_6.csv":
-                    if (val2 > 2500 && val2 < 1000)
-                        $('.input2').val(1000);
+                    if (!(val2 > 2500 && val2 < 1000))
+                        i2.val(1000);
                     break;
             }
 
-
             var msg = $('.form').serialize();
             $.ajax({
-                url: 'calculator.php',
+                url: 'main.php',
                 data: msg,
                 success: function (data) {
                     $('.results').html(data);
                 }
             });
         });
-
-
     });
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

@@ -14,9 +14,10 @@ class Json
 
 
     /**
-     * @param $name
+     * @param $key
+     * @param $value
      */
-    public function addJsonData($name)
+    public function addJsonData($key, $value)
     {
         $file = file_get_contents('config/package.json');  // Открыть файл data.json
 
@@ -24,7 +25,7 @@ class Json
 
         unset($file);                               // Очистить переменную $file
 
-        $taskList[] = array('name' => $name);        // Представить новую переменную как элемент массива, в формате 'ключ'=>'имя переменной'
+        $taskList[] = array($key => $value);        // Представить новую переменную как элемент массива, в формате 'ключ'=>'имя переменной'
 
         file_put_contents('config/package.json', json_encode($taskList));  // Перекодировать в формат и записать в файл.
 
@@ -61,41 +62,39 @@ class Json
     /**
      * @param $current
      */
-    public function deleteJsonData($current){
+    public function deleteJsonData($current)
+    {
         $file = file_get_contents('config/package.json');         // Открыть файл data.json
 
-        $taskList=json_decode($file,TRUE);                  // Декодировать в массив
-        var_dump($taskList);
-        echo "<br>";
-        foreach ( $taskList as $key => $value){        // Найти в массиве
-                var_dump($value);
-                echo "<br>";
-                var_dump($current);
-            if (in_array( $current, $value)) {           // Переменную $current
+        $taskList = json_decode($file, TRUE);                  // Декодировать в массив
+        foreach ($taskList as $key => $value) {        // Найти в массиве
+            if (in_array($current, $value)) {           // Переменную $current
 
                 unset($taskList[$key]);             // после обнаружения удалить
             }
         }
 
-        file_put_contents('config/package.json',json_encode($taskList)); // Перекодировать в формат и записать в файл.
+        file_put_contents('config/package.json', json_encode($taskList)); // Перекодировать в формат и записать в файл.
 
         unset($taskList);                           // Очистить переменную $taskList
     }
 
+
     /**
-     *
+     * @param $key
+     * @return mixed
      */
-    public function getJsonData (){
+    public function getJsonData($key)
+    {
         $file = file_get_contents('config/package.json');         // Открыть файл data.json
 
-        $taskList=json_decode($file,TRUE);
-        foreach ( $taskList as $key => $value){
-            echo "<br>".$value["name"];
-        };
-        var_dump($taskList);
-        echo "<br>";
-       // echo "<br>".$json_a->{"name"};
-       // echo "<br>".$taskList["name"];
+        $taskList = json_decode($file, TRUE);
+        $count = count($taskList);
+        for ($i = 0; $i < $count; $i++) {
+            if (isset($taskList[$i][$key])) {
+                return $taskList[$i][$key];
+            }
+        }
     }
 
     function __destruct()
@@ -104,11 +103,5 @@ class Json
     }
 }
 
-$json = new Json();
 
-//$json->addJsonData("lol");
-$json->getJsonData();
-//
-//$json->updateJsonData("lol","kek");
-//
-$json->deleteJsonData("kek");
+
