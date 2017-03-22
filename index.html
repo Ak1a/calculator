@@ -50,7 +50,7 @@
 
             </form>
         </div>
-        <div class="panel-footer panel-danger">
+        <div class="panel-footer">
             <span class="results">Цена: 55.88</span><span class="discount"></span>
         </div>
         <a href="admin.html">Админка</a>
@@ -62,9 +62,9 @@
 
     $(document).ready(function () {
 
-        var i12 = $('.height, .width');
-        var i1 = $(".height");
-        var i2 = $(".width");
+        var heightAndWidth = $('.height, .width');
+        var height = $(".height");
+        var width = $(".width");
         var type_of_window = "type_1.csv";
         var json;
         $.get('config/package.json', function (data) {
@@ -76,109 +76,107 @@
         $(".window1").click(function () {
 
             type_of_window = "type_1.csv";
-            i12.val(500);
+            heightAndWidth.val(500);
             $('.type').val("type_1.csv");
 
         });
         $(".window2").click(function () {
 
             type_of_window = "type_2.csv";
-            i12.val(600);
+            heightAndWidth.val(600);
             $('.type').val("type_2.csv");
         });
         $(".window3").click(function () {
 
             type_of_window = "type_3.csv";
-            i1.val(600);
-            i2.val(800);
+            height.val(600);
+            width.val(800);
             $('.type').val("type_3.csv");
 
         });
         $(".window4").click(function () {
 
             type_of_window = "type_4.csv";
-            i1.val(600);
-            i2.val(800);
+            height.val(600);
+            width.val(800);
             $('.type').val("type_4.csv");
         });
         $(".window5").click(function () {
 
             type_of_window = "type_5.csv";
-            i1.val(1800);
-            i2.val(700);
+            height.val(1800);
+            width.val(700);
             $('.type').val("type_5.csv");
         });
         $(".window6").click(function () {
 
             type_of_window = "type_6.csv";
-            i1.val(1800);
-            i2.val(1000);
+            height.val(1800);
+            width.val(1000);
             $('.type').val("type_6.csv");
         });
 
 
         $(".height, .width, .lamination, .type_of_window").bind("change click", function () {
 
-            i12.bind("change keyup input click", function () {
+            heightAndWidth.bind("change keyup input click", function () {
                 if (this.value.match(/[^0-9]/g)) {
                     this.value = this.value.replace(/[^0-9]/g, '');
                 }
             });
-            // var type = $(".type_of_window").val();
+           
             var type = type_of_window;
 
-            var val = i1.val();
+            var val = height.val();
             switch (type) {
                 case "type_1.csv":
                     if (!(val > 500 && val < 2300))
 
-                        i1.val(500);
+                        height.val(500);
                     break;
                 case "type_2.csv":
                 case "type_3.csv":
                 case "type_4.csv":
                     if (!(val < 1900 && val > 600))
 
-                        i1.val(600);
+                        height.val(600);
                     break;
                 case "type_5.csv":
                 case "type_6.csv":
                     if (!(val < 2500 && val > 1800))
-                        i1.val(1800);
+                        height.val(1800);
                     break;
             }
 
-            var val2 = i2.val();
+            var val2 = width.val();
 
             switch (type) {
                 case "type_1.csv":
                     if (!(val2 < 1800 && val2 > 500))
-                        i2.val(500);
+                        width.val(500);
                     break;
                 case "type_2.csv":
                     if (!(val2 < 1600 && val2 > 600))
-                        i2.val(600);
+                        width.val(600);
                     break;
                 case "type_3.csv":
                     if (!(val2 < 3000 && val2 > 800))
-                        i2.val(800);
+                        width.val(800);
                     break;
                 case "type_4.csv":
                     if (!(val2 < 2600 && val2 > 800))
 
-                        i2.val(800);
+                        width.val(800);
                     break;
                 case "type_5.csv":
                     if (!(val2 < 1200 && val2 > 700))
-                        i2.val(700);
+                        width.val(700);
                     break;
                 case "type_6.csv":
                     if (!(val2 < 2500 && val2 > 1000))
-                        i2.val(1000);
+                        width.val(1000);
                     break;
             }
-
-
         });
 
 
@@ -192,7 +190,6 @@
                 }
             });
         });
-
     });
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

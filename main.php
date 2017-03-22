@@ -24,7 +24,9 @@ if ($id == 'user') {
     $discount = $json->getJsonData("discount");
 
     $res = $calculator->calculate($type, $height, $width, $lamination, $discount);
+    if($res != 0){
     echo $res;
+    } else echo "Извините окна такого размера нет";
 
 } else {
     $input_data_to_change = $_GET["input_data_to_change"];

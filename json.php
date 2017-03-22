@@ -14,8 +14,9 @@ class json
 
 
     /**
-     * @param $key
-     * @param $value
+     * Принимаем ключ значение и добавляем его в json файл
+     * @param string $key
+     * @param string $value
      */
     public function addJsonData($key, $value)
     {
@@ -32,9 +33,11 @@ class json
         unset($taskList);
     }
 
+
     /**
-     * @param $oldname
-     * @param $name
+     * Принимаем ключ и новое значение и обновляем элемент
+     * @param string $key
+     * @param string $newvalue
      */
     public function updateJsonData($key, $newvalue)
     {
@@ -56,7 +59,8 @@ class json
     }
 
     /**
-     * @param $current
+     * Удалаем элемент по ключу
+     * @param string $current
      */
     public function deleteJsonData($current)
     {
@@ -77,7 +81,8 @@ class json
 
 
     /**
-     * @param $key
+     * Получаем значение по ключу
+     * @param string $key
      * @return mixed
      */
     public function getJsonData($key)

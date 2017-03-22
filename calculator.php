@@ -11,6 +11,7 @@ class calculator
     private $csv;
 
     /**
+     * Получить значение переменной $csv
      * @return mixed
      */
     public function getCsv()
@@ -19,6 +20,7 @@ class calculator
     }
 
     /**
+     * Присвоить значение переменной $csv
      * @param mixed $csv
      */
     public function setCsv($csv)
@@ -34,16 +36,18 @@ class calculator
     }
 
     /**
-     * @param $typeOfwindow
+     * Парсинг csv файла
+     * @param $typeOfWindow
      */
-    private function typeOfWindow($typeOfwindow)
+    private function typeOfWindow($typeOfWindow)
     {
-        if (is_string($typeOfwindow)) {
-            $this->setCsv(array_map('str_getcsv', file($typeOfwindow)));
+        if (is_string($typeOfWindow)) {
+            $this->setCsv(array_map('str_getcsv', file($typeOfWindow)));
         } else echo "Please enter string";
     }
 
     /**
+     * Получаем высоту окна от клиента находим ее в таблице csv, возвращаем ее позицию
      * @param $height
      * @return int
      */
@@ -62,13 +66,14 @@ class calculator
     }
 
     /**
+     * Получаем ширину окна от клиента находим ее в таблице csv, возвращаем ее позицию
      * @param $width
      * @return int
      */
     private function rangeWidth($width)
     {
         $getCSV = $this->getCsv();
-        $num = count($getCSV);
+        $num = count($getCSV [0]);
         for ($i = 1; $i < $num; $i++) {
             $row = $getCSV[0][$i];
             $str = strpos($row, "-");
@@ -80,10 +85,12 @@ class calculator
     }
 
     /**
-     * @param $type
+     * Получаем высоту окна от клиента, получаем ширину окна от клиента и тип окна, в таблице csv находим цену по позициям
+     * возвращаем ее клиенту
+     * @param string $type
      * @param $height
      * @param $width
-     * @return mixed
+     * @return float
      */
     public function getPrice($type, $height, $width)
     {
@@ -99,11 +106,11 @@ class calculator
     /**
      * Вывод конечной цены
      * @param string $type Тип окна
-     * @param int $height
-     * @param int $width
+     * @param $height
+     * @param $width
      * @param int $lan
      * @param int $dis
-     * @return mixed
+     * @return float
      */
     public function calculate($type, $height, $width, $lan, $dis)
     {
