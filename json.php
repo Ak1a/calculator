@@ -6,7 +6,7 @@
  * Date: 20.03.2017
  * Time: 22:14
  */
-class Json
+class json
 {
     function __construct()
     {
@@ -36,21 +36,17 @@ class Json
      * @param $oldname
      * @param $name
      */
-    public function updateJsonData($oldname, $name)
+    public function updateJsonData($key, $newvalue)
     {
-        $oldname = trim($oldname);               // Имя переменной которую нужно обновить
-
-        $newname = trim($name);                // Имя переменной которой обновим старое значение
 
         $file = file_get_contents('config/package.json');     // Открыть файл data.json
 
         $taskList = json_decode($file, TRUE);              // Декодировать в массив
 
-        foreach ($taskList as $key => $value) {    // Найти в массиве
-
-            if (in_array($oldname, $value)) {    // Совпадение значения переменной
-
-                $taskList[$key] = array('name' => $newname);  // Присвоить новое значение
+        $count = count($taskList);
+        for ($i = 0; $i < $count; $i++) {
+            if (isset($taskList[$i][$key])) {
+                 $taskList[$i][$key]= $newvalue;
             }
         }
 

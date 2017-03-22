@@ -1,0 +1,13 @@
+.discount, .results{
+    font-size: 40px;
+    color: darkred;
+}
+
+.discount{
+    margin-left: 150px;
+}
+
+.button{
+    margin: 25px 0;
+    width: 100%;
+}

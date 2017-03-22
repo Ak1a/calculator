@@ -6,7 +6,6 @@
  * Date: 18.03.2017
  * Time: 17:01
  */
-include ('json.php');
 class calculator
 {
     private $csv;
@@ -93,6 +92,7 @@ class calculator
         $w = $this->rangeWidth($width);
         $csv = $this->getCsv();
         $res = $csv [$h] [$w];
+        $res = (float)str_replace(',', '.', $res);
         return $res;
     }
 
@@ -101,22 +101,17 @@ class calculator
      * @param string $type Тип окна
      * @param int $height
      * @param int $width
-     * @param int $lamination
-     * @param int $discount
+     * @param int $lan
+     * @param int $dis
      * @return mixed
      */
-    public function calculate($type, $height, $width, $lamination, $discount)
+    public function calculate($type, $height, $width, $lan, $dis)
     {
-        $json = new Json();
-        $pr = $this->getPrice($type,$height,$width);
-        $lan = $json->getJsonData($lamination);
-        $lan = "0.".$lan;
-        $dis = $json->getJsonData($discount);
-        $dis = "0.".$dis;
-
-        $pr = $pr + ($pr * $lan);
-
-        $price = $pr - ($pr * $dis);
+        $pr = (float)$this->getPrice($type, $height, $width);
+        $lan = "0." . $lan;
+        $dis = "0." . $dis;
+        $pr = $pr + ($pr * (float)$lan);
+        $price = $pr - ($pr * (float)$dis);
 
         return $price;
     }

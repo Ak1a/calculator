@@ -1,14 +1,1 @@
-[
-  {
-    "outside": "18"
-  },
-  {
-    "inside": "22"
-  },
-  {
-    "both": "40"
-  },
-  {
-    "discount": "0"
-  }
-]
+[{"outside":"18"},{"inside":"22"},{"both":"40"},{"discount":"0"}]

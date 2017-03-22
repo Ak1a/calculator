@@ -14,17 +14,17 @@
 <div class="container">
     <div class="calculator panel panel-default">
         <div class="calculator_head panel-heading">
-            <h3 class="calculator_head__name panel-title">Калькулятор</h3>
+            <h1 class="calculator_head__name panel-title">Калькулятор</h1>
         </div>
         <div class="calculator_body panel-body">
             <form action="calculator.php" class="form form-inline" method="get">
-
                 <div class="input-group">
-                    <input id="height" name="height" class="input1 form-control" type="text" min="500" max="1200"
+
+                    <input id="height" name="height" class="height form-control" type="text" min="500" max="1200"
                            value="500">
                     <label class="input-group-addon" for="height">мм</label>
 
-                    <input id="width" name="width" class="input2 form-control" type="text" value="500">
+                    <input id="width" name="width" class="width form-control" type="text" value="500">
                     <label class="input-group-addon" for="width">мм</label>
                 </div>
 
@@ -50,20 +50,28 @@
 
             </form>
         </div>
+        <div class="panel-footer panel-danger">
+            <span class="results">Цена: 55.88</span><span class="discount"></span>
+        </div>
+        <a href="admin.html">Админка</a>
     </div>
-    <div class="results"></div>
-    <div class="res"></div>
+
 </div>
 </body>
 <script>
 
     $(document).ready(function () {
 
-        var i12 = $('.input1, .input2');
-        var i1 = $(".input1");
-        var i2 = $(".input2");
-        var tow = $(".type_of_window");
-        var type_of_window;
+        var i12 = $('.height, .width');
+        var i1 = $(".height");
+        var i2 = $(".width");
+        var type_of_window = "type_1.csv";
+        var json;
+        $.get('config/package.json', function (data) {
+            json = data [3]["discount"];
+            $(".discount").html("Сегодня скидка для вас аж целых "+json+"%");
+
+        });
 
         $(".window1").click(function () {
 
@@ -103,13 +111,13 @@
         $(".window6").click(function () {
 
             type_of_window = "type_6.csv";
-           // i1.val(1800);
-            //i2.val(1000);
+            i1.val(1800);
+            i2.val(1000);
             $('.type').val("type_6.csv");
         });
 
 
-        $(".input1, .input2, .lamination, .type_of_window").bind("change click", function () {
+        $(".height, .width, .lamination, .type_of_window").bind("change click", function () {
 
             i12.bind("change keyup input click", function () {
                 if (this.value.match(/[^0-9]/g)) {
@@ -129,13 +137,13 @@
                 case "type_2.csv":
                 case "type_3.csv":
                 case "type_4.csv":
-                    if (!(val > 1900 && val < 600))
+                    if (!(val < 1900 && val > 600))
 
                         i1.val(600);
                     break;
                 case "type_5.csv":
                 case "type_6.csv":
-                    if (val > 2500 && val < 1800)
+                    if (!(val < 2500 && val > 1800))
                         i1.val(1800);
                     break;
             }
@@ -144,41 +152,47 @@
 
             switch (type) {
                 case "type_1.csv":
-                    if (!(val2 > 1800 && val2 < 500))
+                    if (!(val2 < 1800 && val2 > 500))
                         i2.val(500);
                     break;
                 case "type_2.csv":
-                    if (!(val2 > 1600 && val2 < 600))
+                    if (!(val2 < 1600 && val2 > 600))
                         i2.val(600);
                     break;
                 case "type_3.csv":
-                    if (!(val2 > 3000 && val2 < 800))
+                    if (!(val2 < 3000 && val2 > 800))
                         i2.val(800);
                     break;
                 case "type_4.csv":
-                    if (!(val2 > 2600 && val2 < 800))
+                    if (!(val2 < 2600 && val2 > 800))
 
                         i2.val(800);
                     break;
                 case "type_5.csv":
-                    if (!(val2 > 1200 && val2 < 700))
+                    if (!(val2 < 1200 && val2 > 700))
                         i2.val(700);
                     break;
                 case "type_6.csv":
-                    if (!(val2 > 2500 && val2 < 1000))
+                    if (!(val2 < 2500 && val2 > 1000))
                         i2.val(1000);
                     break;
             }
 
+
+        });
+
+
+        $(".form").bind("change click", function () {
             var msg = $('.form').serialize();
             $.ajax({
                 url: 'main.php',
                 data: msg,
                 success: function (data) {
-                    $('.results').html(data);
+                    $('.results').html("Цена: " + data);
                 }
             });
         });
+
     });
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
